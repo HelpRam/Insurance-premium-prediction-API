@@ -1,0 +1,53 @@
+# Use official Python slim image as base
+FROM python:3.11-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy requirements file (you create this) and install dependencies
+COPY requirements.txt .
+
+RUN pip install  -r requirements.txt
+
+# Copy your app.py code
+COPY app.py .
+
+# Expose Streamlit default port
+EXPOSE 8501
+
+# Run your app.py when container starts
+CMD ["python", "app.py"]
+
+----------------------------------------------------------
+# Build  
+ docker build -t ram717/carprediction . 
+
+
+# Run
+docker run -p 8501:8501 ram717/carprediction
+
+
+# To push in Registry or dockerhub so that ithers can use
+docker login -- use new terminal
+
+docker push ram717/carprediction
+
+
+
+-----------------------------
+FROM python:3.8
+
+WORKDIR /app
+
+
+COPY . /app
+
+
+RUN pip install -r requirements.txt
+
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "app.py"]
+
+----------------------
